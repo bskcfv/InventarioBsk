@@ -3,7 +3,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 ## Getting Started
 
 //Librerias
-- dotenv, mongodb, puppeteer
+- dotenv, mongodb, puppeteer, nodemailer
 npm install --save @fortawesome/fontawesome-free
 npm install --save @fortawesome/react-fontawesome @fortawesome/free-regular-svg-icons @fortawesome/free-solid-svg-icons
 

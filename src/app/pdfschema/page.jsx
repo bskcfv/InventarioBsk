@@ -24,7 +24,7 @@ export default function PDF(){
         .catch((err)=>console.log("Error:", err))
     }, []);
 
-      // Función para descargar PDF
+    // Función para descargar PDF
     const downloadPDF = async () => {
         try {
         const res = await fetch("/api/PDF");
@@ -71,7 +71,7 @@ export default function PDF(){
                     <p className="p-4 m-2 text-center">LISTADO</p>
                     {
                         productos.map((p)=>(
-                            <div key={p._id} className="flex flex-col md:flex-row items-center p-4 m-2 bg-gray-900 rounded-lg gap-4">
+                            <div key={p._id} className="flex flex-col md:flex-row items-center cursor-pointer p-4 m-2 bg-gray-900 rounded-lg gap-4 hover:bg-gray-700 transition duration-150">
                                 <div className='m-2 '>
                                     {p.nombre} - ${p.precio} - Stock: {p.stock}
                                 </div>

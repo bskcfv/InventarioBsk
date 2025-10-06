@@ -13,3 +13,16 @@ export const FindEmail = async(email)=>{
         password: result.password
     }
 }
+
+//Servicio de Update Password
+export const UpdatePass = async(email, password) =>{
+    const client = await ClientPromise;
+    const db = client.db('BskInventory');
+    //Query para Actualizar password segun id
+    const result = await db.collection('Auth').updateOne(
+        {email}, 
+        {$set:{password}}
+    )
+    //Retornar Resultado
+    return result.modifiedCount;
+}
