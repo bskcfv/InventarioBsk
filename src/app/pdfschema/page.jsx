@@ -2,10 +2,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
+
 export default function PDF(){
     //Guarda los Productos, similar a los getters y setters
     const [productos, setProductos] = useState([]);
     const [stats, setStats] = useState([]);
+    //Objetivo -> Redirigir Según Producto
+    const router = useRouter();
+    //Funcion OnCLick para Redirigir Página
+    const  handleClick = (id) => {
+        router.push(`/productos/${id}`)
+    }
     //UseEffect llama la Api slo una vez, cuando los componentes estan montados
     //El [] al final, indica que solo se ejecute una vez la peticion una vez que se haya montado el componente
     useEffect(()=>{
@@ -57,7 +65,7 @@ export default function PDF(){
     return(
         <div className="p-4">
             <div className="flex justify-between m-4 bg-blue-950 rounded-2xl">
-                <p></p>
+                <a href="/productos" className='flex items-center  m-2 p-2 bg-gray-700 rounded-2xl hover:bg-gray-500 transition duration-300'>Registrar Nuevo Producto</a>
                 <p className="p-4 m-2 text-center">INVENTARIO PRODUCTOS</p>
                 <button 
                     className="cursor-pointer p-2 rounded" 
@@ -71,7 +79,12 @@ export default function PDF(){
                     <p className="p-4 m-2 text-center">LISTADO</p>
                     {
                         productos.map((p)=>(
-                            <div key={p._id} className="flex flex-col md:flex-row items-center cursor-pointer p-4 m-2 bg-gray-900 rounded-lg gap-4 hover:bg-gray-700 transition duration-150">
+                            <div 
+                            key={p._id}
+                            //Sin Funcion Anonima -> Ejecutaría Inmediatamente la Funcion
+                            //Con Funcion Anonima -> Espera a que el User haga Click
+                            onClick={()=>{handleClick(p._id)}} 
+                            className="flex flex-col md:flex-row items-center cursor-pointer p-4 m-2 bg-gray-900 rounded-lg gap-4 hover:bg-gray-700 transition duration-150">
                                 <div className='m-2 '>
                                     {p.nombre} - ${p.precio} - Stock: {p.stock}
                                 </div>
