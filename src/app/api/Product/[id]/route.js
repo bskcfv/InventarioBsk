@@ -1,5 +1,6 @@
 import { UpdateProducto, DeleteProduct } from "@/services/product.service";
 import { cookies } from "next/headers";
+import { putProductSchema } from "@/validators/Schemas";
 
 export async function PUT(req, {params}) {
     try {
@@ -9,7 +10,14 @@ export async function PUT(req, {params}) {
         const token = cookies().get('access_token')?.value;
         //Validar Existencia del Token
         if(!token) return new Response(JSON.stringify({message:"User No Autorizado"}),{status:401});
-        const {precio, stock} = await req.json(); 
+        //Preparar Body
+        const body = await req.json();
+        //Asignar Valores a Body
+        const {precio, stock} = body;
+        //LLamado a Validaciones
+        const parsed = putProductSchema.safeParse(body)
+        //Verificar Estado de los valores
+        if(!parsed.success) return new Response(JSON.stringify({error: parsed.error.message}),{status:400});
         //Llamado al Servicio
         const result = await UpdateProducto(id, precio, stock);
         //Retornar Respuesta

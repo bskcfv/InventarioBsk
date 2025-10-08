@@ -1,9 +1,17 @@
 import { FindEmail, generateToken } from "@/services/auth.service.js";
 import { cookies } from "next/headers";
+import { loginSchema } from "@/validators/Schemas";
 
 export async function POST(req) {
     try {
-        const {email, password} = await req.json();
+        //Preparar Body
+        const body = await req.json();
+        //Asignar Valores a Body
+        const {email, password} = body;
+        //Llamado al Servicio de Validacion
+        const parsed = loginSchema.safeParse(body);
+        //Validacion de Estado de los Valores
+        if(!parsed.success) return new Response(JSON.stringify({error: parsed.error.message}),{status:400});
         //Servicio de Busqueda de Email
         const result = await FindEmail(email);
         //Verificar Passwords

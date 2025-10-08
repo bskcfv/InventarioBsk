@@ -1,5 +1,6 @@
 import { GetProductos, GetProductoByNombre, InsertProducto } from "@/services/product.service";
 import { cookies } from "next/headers";
+import { productSchema } from "@/validators/Schemas";
 
 export async function GET(req) {
     try {
@@ -20,7 +21,14 @@ export async function POST(req) {
         const token = cookies().get('access_token')?.value;
         //Validar Existencia del Token
         if(!token) return new Response(JSON.stringify({message:"User No Autorizado"}),{status:401});
-        const {nombre, precio, descrip, foto, stock} = await req.json();
+        //Preparar Body
+        const body = await req.json();
+        //Asignar Valores al Body
+        const {nombre, precio, descrip, foto, stock} = body;
+        //Llamado de Validacion de los Valores Contenidos en el Body
+        const parsed = productSchema.safeParse(body);
+        //Verificar Estado de los Valores
+        if(!parsed.success) return new Response(JSON.stringify({error: parsed.error.message}),{status:400});
         //Llamado al servicio para verificacion De Productos Repetidos
         const ver = await GetProductoByNombre(nombre);
         //Verificacion

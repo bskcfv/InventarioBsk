@@ -36,11 +36,12 @@
 | **nodemailer** | Envío de correos electrónicos |
 | **jsonwebtoken (JWT)** | Autenticación segura |
 | **Font Awesome** | Iconos visuales para la UI |
+| **Zod** | Manejo de Validaciones |
 
 ### 📦 Instalación de dependencias
 
 ```bash
-npm install dotenv mongodb puppeteer nodemailer jsonwebtoken
+npm install dotenv mongodb puppeteer nodemailer jsonwebtoken zod
 npm install @fortawesome/fontawesome-free
 npm install @fortawesome/react-fontawesome @fortawesome/free-regular-svg-icons @fortawesome/free-solid-svg-icons
 ````
@@ -53,6 +54,9 @@ npm install @fortawesome/react-fontawesome @fortawesome/free-regular-svg-icons @
 src/
  ├── lib/
  │   └── db.js                  # Conexión con MongoDB Atlas
+ │
+ ├── validators/
+ │   └── Schemas.js             # Validaciones de datos con Zod
  │
  ├── services/
  │   ├── auth.service.js        # Autenticación y permisos de usuario
@@ -79,6 +83,7 @@ src/
       │
       └── sale/
           └── [id]/route.js     # Registrar venta y actualizar stock (POST)
+
 ```
 
 ---
