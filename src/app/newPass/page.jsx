@@ -52,3 +52,6 @@ export default function NewPassword(){
         </section>
     )
 }
+
+export const dynamic = "force-dynamic";
+
