@@ -177,7 +177,7 @@ Esto instalará todas las librerías necesarias, incluyendo:
 
 ### 🧩 3. Configurar Variables de Entorno
 
-Crea un archivo `.env.local` en la raíz del proyecto con tus credenciales (ver la sección [⚙️ Configuración del Entorno](#⚙️-configuración-del-entorno)).
+Crea un archivo `.env.local` en la raíz del proyecto con tus credenciales (ver la sección: ⚙️ Configuración del Entorno).
 
 ---
 
