@@ -26,14 +26,17 @@ export default function Home() {
     <section>
       <div>
           <div className="bg-gray-600 flex justify-between">
-            <p></p>
             <a href="/login"
+            className="m-4 p-2 text-black bg-gray-700 rounded-2xl hover:bg-gray-500 transition duration-300"
+            >Iniciar Sesion</a>
+            <a href="/pdfschema"
             className="m-4 p-2 text-black bg-gray-700 rounded-2xl hover:bg-gray-500 transition duration-300"
             >Inventario</a>
           </div>
           <div className=" p-4 bg-gray-950 rounded-2xl">
             <p className="p-4 m-2 text-center">PRODUCTOS EN VENTA</p>
             {
+              productos ?
               productos.map((p)=>(
                   <div 
                     key={p._id}
@@ -50,6 +53,8 @@ export default function Home() {
                       </div>
                   </div>
                 ))
+                :
+                <div>No hay productos</div>
             }
           </div>
       </div>

@@ -5,7 +5,6 @@ export default function Sale({params}){
     //recolectar el id de params
     const { id } = use(params);
     //Objetivo -> Recolectar Datos de los Inputs
-    const emailRef = useRef();
     const cantidadRef = useRef();
     //Funcion Enalzada al Formulario
     const handleSubmit = async(e) =>{
@@ -13,14 +12,12 @@ export default function Sale({params}){
         e.preventDefault();
         try {
             //Recoger Valores
-            const emailV = emailRef.current.value;
             const cantidadV = cantidadRef.current.value;
             //Peticion POST
             const result = await fetch(`/api/sale/${id}`,{
                 method:'POST',
                 headers:{"Content-Type": "application/json"},
                 body:JSON.stringify({
-                    email:emailV, 
                     cantidad:cantidadV
                 })
             })
@@ -28,8 +25,9 @@ export default function Sale({params}){
             const data = await result.json();
             if(!data.ok){
                 alert(JSON.stringify(data));
-                return;
             }
+            //Limpiar Campos
+            cantidadRef.current.value = ""
         } catch (error) {
             alert(JSON.stringify(error))
         }
@@ -41,13 +39,6 @@ export default function Sale({params}){
                 <form onSubmit={handleSubmit} className="m-4 p-4 bg-gray-900 rounded-2xl">
                     <h2 className="mb-4 text-center">REGISTRAR COMPRA</h2>
                     <label className="m-4 text-center">Producto: {id}</label>
-                    <div className="m-4 b-4">
-                        <label>Email: </label>
-                        <input 
-                        type="email"
-                        ref={emailRef}
-                        className="m-2 p-2 bg-gray-800 rounded-2xl"/>
-                    </div>
                     <div className="m-4 b-4">
                         <label>Cantidad: </label>
                         <input 

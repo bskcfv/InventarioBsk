@@ -35,7 +35,7 @@ export default function LogIng(){
                 return;
             } 
             //Redirigir a Inventario Sí todo Fué Exitoso
-            route.push("/pdfschema")
+            route.push("/")
         } catch (error) {
             alert(JSON.stringify(error));
             return;
