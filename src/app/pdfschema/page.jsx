@@ -64,7 +64,7 @@ export default function PDF(){
     
     return(
         <div className="p-4">
-            <div className="flex justify-between m-4 bg-blue-950 rounded-2xl">
+            <div className="flex justify-between m-4 bg-gray-900 rounded-2xl">
                 <a href="/productos" className='flex items-center  m-2 p-2 bg-gray-700 rounded-2xl hover:bg-gray-500 transition duration-300'>Registrar Nuevo Producto</a>
                 <p className="p-4 m-2 text-center">INVENTARIO PRODUCTOS</p>
                 <button 
@@ -95,13 +95,13 @@ export default function PDF(){
                         ))
                     }
                 </div>
-                <div className="p-4 m-2 bg-blue-950 rounded-2xl">
+                <div className="p-4 m-2 bg-gray-900 rounded-2xl">
                     <p className="p-4 m-2">TOTAL DE STOCK</p>
                     <div className="p-4 m-2 bg-gray-900 rounded">
                         <p className="text-center">{stats.totalStock}</p>
                     </div>
                 </div>
-                <div className="p-4 m-2 bg-blue-950 rounded-2xl">
+                <div className="p-4 m-2 bg-gray-950 rounded-2xl">
                     <p className="p-4 m-2">PROMEDIO DE STOCK Y PRECIO</p>
                     <div className="p-4 m-2 bg-gray-900 rounded">
                         <p className="text-center"> AVG STOCK: {stats.avgStock}</p>

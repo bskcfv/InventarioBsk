@@ -6,9 +6,11 @@ export async function POST(req) {
         //Servicio de Busqueda de Email
         const result = await FindEmail(email);
         //Verificar Passwords
-        if(password != result.password) return new Response(JSON.stringify({error:"Password Incorrecta"}),{status:401});
-        //Retornar Datos
-        return new Response(JSON.stringify({user:result}), {status:200})   
+        try {
+            if(password == result.password) return new Response(JSON.stringify({user:result}), {status:200})  
+        } catch (error) {
+            return new Response(JSON.stringify({error:"Password Incorrecta"}),{status:401});
+        }
     } catch (error) {
         return new Response(JSON.stringify({error: error.message}),{status:500})
     }

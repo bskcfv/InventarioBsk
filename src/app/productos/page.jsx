@@ -1,4 +1,5 @@
 "use client"
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
 export default function Productos(){
@@ -8,6 +9,8 @@ export default function Productos(){
     const precio = useRef();
     const decripcion = useRef();
     const stock = useRef();
+    //Objetivo -> Redireccionar a Inventario
+    const router = useRouter();
     //UseState -> Getters y Setters
     //preview -> Mostrar Previsualizacion de Imagen Cargada
     const [preview, setPreview] = useState(null);
@@ -64,14 +67,17 @@ export default function Productos(){
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     nombre:nombreV, 
-                    precio:precioV, 
+                    //Conversion a Float
+                    precio:parseFloat(precioV), 
                     descrip:descripV, 
                     foto:base64Image, 
-                    stock:stockV
+                    //Conversion a Entero
+                    stock:parseInt(stockV)
                 })
             })
             //Avisar Registro Exitoso
             alert("Producto Registrado")
+            router.push("/pdfschema")
         } catch (error) {
             //Avisar Error
             alert(error.message);
@@ -97,13 +103,14 @@ export default function Productos(){
                 <div className="flex justify-between items-center">
                     <label htmlFor="">Precio: </label>
                     <input className="bg-gray-500 rounded-2xl m-2 p-2"
-                    type="text"
+                    type="number"
+                    step='any'
                     ref={precio} />
                 </div>
                 <div className="flex justify-between items-center">
                     <label htmlFor="">Stock: </label>
                     <input className="bg-gray-500 rounded-2xl m-2 p-2"
-                    type="text"
+                    type="number"
                     ref={stock} />
                 </div>
                 <div className="flex justify-between">
@@ -122,7 +129,7 @@ export default function Productos(){
         {preview && (
             <div className="m-2 bg-gray-900 rounded-2xl">
             <img src={preview} alt="Vista previa" className="m-2 p-2 w-80 rounded-2xl" />
-            <p className="p-4 text-center text-amber-50">Imagen lista para enviar (base64)</p>
+            <p className="p-4 text-center text-amber-50">Imagen lista para enviar</p>
             </div>
         )}
         </div>

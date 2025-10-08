@@ -1,4 +1,4 @@
-import { UpdateProducto, DeleteProduct, GetProductoById } from "@/services/product.service";
+import { UpdateProducto, DeleteProduct } from "@/services/product.service";
 
 export async function PUT(req, {params}) {
     try {

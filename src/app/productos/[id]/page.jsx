@@ -80,7 +80,7 @@ export default function ProductById({ params }) {
                 </div>
                 <button
                 type="submit"
-                className="bg-blue-600 hover:bg-blue-500 text-white m-2 p-2 rounded-2xl">                
+                className="bg-gray-800 hover:bg-gray-500 transition duration-300 text-white m-2 p-2 rounded-2xl">                
                 Update
                 </button>
             </form>

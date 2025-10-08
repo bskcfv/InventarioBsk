@@ -2,15 +2,19 @@
 import { useRef } from "react"
 
 export default function NewPassword(){
-
+    //Obtencion de Email Proveniente del Input
     const email = useRef();
+    //Obtencion de Password Proveniente del Input
     const newPassword = useRef();
-
+    //Funcion OnSubmit 
+    // Objetivo -> Actualizar Password
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            //Obtener Valores
             const emailValue = email.current.value;
             const passValue = newPassword.current.value;
+            //Peticion PUT
             const result = await fetch("/api/Auth/setPass", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -49,7 +53,7 @@ export default function NewPassword(){
                 <div className="m-2 flex justify-center">
                     <button type="submit" className="p-4 cursor-pointer bg-gray-900 rounded-4xl hover:bg-gray-800 transition duration-300">Actualizar Contrasenha</button>
                 </div>
-                <a href="/pdfschema" className="p-2 m-2 flex justify-center bg-gray-900 rounded-b-full hover:bg-gray-800 transition duration-300">Sign In</a>
+                <a href="/login" className="p-2 m-2 flex justify-center bg-gray-900 rounded-b-full hover:bg-gray-800 transition duration-300">Sign In</a>
             </form>
         </section>
     )
