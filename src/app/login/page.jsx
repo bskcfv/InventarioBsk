@@ -28,11 +28,16 @@ export default function LogIng(){
                 body: JSON.stringify({email: emailV, password: passV})
             })
             //Esperar Resultado
-            await result.json()
+            const data = await result.json()
+            //Validacion a Mejorar*
+            if(data.error) {
+                alert("Credenciales Incorrectas") 
+                return;
+            } 
             //Redirigir a Inventario Sí todo Fué Exitoso
             route.push("/pdfschema")
         } catch (error) {
-            alert("Credenciales Incorrectas");
+            alert(JSON.stringify(error));
             return;
         }
     }

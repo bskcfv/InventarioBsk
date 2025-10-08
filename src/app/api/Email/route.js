@@ -1,25 +1,27 @@
 import { transporterGmail, mailprepare, sendmail } from "@/services/email.service";
-import { FindEmail } from "@/services/auth.service";
+import { FindEmail, generateResetToken } from "@/services/auth.service";
 
 export async function POST(req) {
     try {
         //Titulo del Mail
         const tittle = "RECUPERACION DE CONTRASENHA"
-        //Redireccion de pagina
-        const redirect_page  = "http://localhost:3000/newPass";
         //Usuario al cual va dirigido el mail    
-        const {User} =  await req.json();
+        const {email} =  await req.json();
         //Verificar Si existe el usuario en el Sistema
         try {
             //Llamado al Servicio de Encontrar Email
-            await FindEmail(User);
+            await FindEmail(email);
         } catch (error) {
             return new Response(JSON.stringify({Message: "User No Encontrado en el Sistema"}), {status:401});
         }
+        //Servicio Generar Reset Token
+        const ResetToken = generateResetToken(email);
+        //Redireccion de pagina
+        const redirect_page  = `http://localhost:3000/newPass?token=${ResetToken}`;
         //Llamado al Servicio de Transporte 
         const transporter = await transporterGmail();
         //Llamado al Servicio de Preparar Correo
-        const mail = await mailprepare(User, tittle, redirect_page);
+        const mail = await mailprepare(email, tittle, redirect_page);
         //Llamado al Servicio de Enviar Correo
         const result = await sendmail(transporter, mail);
         //Retornar Resultado

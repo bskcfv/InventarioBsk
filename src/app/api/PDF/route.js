@@ -1,9 +1,14 @@
 import { GeneratePDF } from "@/services/pdf.service";
 import { Statsproducts } from "@/services/behavior.service";
 import { GetProductos } from "@/services/product.service";
+import { cookies } from "next/headers";
 
 export async function GET(req) {
     try {
+        //Obtencion de Token
+        const token = cookies().get('access_token')?.value;
+        //Validar Existencia del Token
+        if(!token) return new Response(JSON.stringify({message:"User No Autorizado"}),{status:401});
         //Servicio de Obtener todos los Productos
         const lsProducts = await GetProductos();
         //Servicio de Obtener Estadisticas

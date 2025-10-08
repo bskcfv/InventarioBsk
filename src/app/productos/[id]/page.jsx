@@ -36,9 +36,14 @@ export default function ProductById({ params }) {
             });
             //Obtener Info del Resultado
             const data = await result.json();
+            if(data.message){
+                alert(JSON.stringify(data))
+                return;
+            }
             //Validar si hubo Actualizacion
             if (data) alert("ACTUALIZADO");
-      
+            //Redireccion a Inventario
+            router.push("/pdfschema")
         } catch (error) {
             alert(JSON.stringify(error));
         }
@@ -50,7 +55,12 @@ export default function ProductById({ params }) {
                 method:"DELETE",
                 headers: { "Content-Type": "application/json" },
             })
-            if(result) alert("Producto Eliminado")
+            const data = await result.json();
+            if(data.message){
+                alert(JSON.stringify(data))
+                return;
+            }
+            alert("Producto Eliminado")
             //Redireccion a Inventario
             router.push("/pdfschema")
         } catch (error) {

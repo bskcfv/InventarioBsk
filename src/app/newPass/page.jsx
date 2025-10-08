@@ -1,9 +1,12 @@
 "use client"
 import { useRef } from "react"
+import { useSearchParams } from "next/navigation";
 
 export default function NewPassword(){
-    //Obtencion de Email Proveniente del Input
-    const email = useRef();
+    //Objetivo -> Obtener el token integrado en la URL
+    const params = useSearchParams();
+    //Obtener el token integrado en la URL
+    const ResetToken = params.get("token");
     //Obtencion de Password Proveniente del Input
     const newPassword = useRef();
     //Funcion OnSubmit 
@@ -12,13 +15,12 @@ export default function NewPassword(){
         e.preventDefault();
         try {
             //Obtener Valores
-            const emailValue = email.current.value;
             const passValue = newPassword.current.value;
             //Peticion PUT
             const result = await fetch("/api/Auth/setPass", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({email: emailValue, newPassword: passValue})
+                body: JSON.stringify({token: ResetToken, newPassword: passValue})
             });
             const data = await result.json();
             alert(JSON.stringify(data));
@@ -34,14 +36,6 @@ export default function NewPassword(){
             
             <form onSubmit={handleSubmit} className="flex flex-col p-10 m-2 bg-gray-700 rounded-full">
                 <p className="p-2 m-2 text-center bg-gray-900 rounded-t-full">Recuperar Contrasenha</p>
-                <div className="m-2 flex justify-between">
-                    <label >Email: </label>
-                    <input
-                    className="bg-gray-900 rounded-2xl" 
-                    type="text" 
-                    ref={email}
-                    />
-                </div>
                 <div className="m-2 flex justify-between">
                     <label>Nueva Contrasenha: </label>
                     <input

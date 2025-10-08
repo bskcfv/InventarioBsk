@@ -1,17 +1,25 @@
 import { generateVenta, updateStock } from "@/services/venta.service";
 import { GetProductoById } from "@/services/product.service";
-import { FindEmail } from "@/services/auth.service";
+import { FindEmail, verifyToken } from "@/services/auth.service";
+import { cookies } from "next/headers";
 
 export async function POST(req, {params}) {
     try {
         //Obtener ID del producto por medio de la URL
         const {id} = params;
-        //Valores a Necesitar
-        const {email, cantidad} = await req.json();
+        //Valores a Necesitar de Body
+        const {cantidad} = await req.json();
+        //Obtener Token de la Cookie
+        const token = cookies().get("access_token")?.value;
+        //Validar Existencia del Token
+        if(!token) return new Response(JSON.stringify({message:"User No Autorizado"}),{status:401});
+        //Verificar Autenticidad del Token Y Obtencion de Datos
+        const decoded = verifyToken(token);
+        if(!decoded) return new Response(JSON.stringify({message:"Token Invalido o Expirado"}),{status:401});
         //Validacion de Email
         try {
             //Llamado al Servicio de Encontrar Email
-            await FindEmail(email);
+            await FindEmail(decoded.email);
         } catch (error) {
             return new Response(JSON.stringify({Message: "User No Encontrado en el Sistema"}), {status:401});
         }
@@ -28,7 +36,7 @@ export async function POST(req, {params}) {
         //Servicio de Update Stock
         await updateStock(id, newStock);
         //Servicio de Generar Venta
-        const sale = await generateVenta(id, cantidad, total, email);
+        const sale = await generateVenta(id, cantidad, total, decoded.email);
         //Retornar Respuesta
         return new Response(JSON.stringify({sale}),{status:201})
     } catch (error) {

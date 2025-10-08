@@ -62,7 +62,7 @@ export default function Productos(){
                 return;
             }
             //Llamado al EndPoint de Product
-            await fetch("/api/Product", {
+            const result = await fetch("/api/Product", {
                 method:"POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -75,6 +75,12 @@ export default function Productos(){
                     stock:parseInt(stockV)
                 })
             })
+            const data = await result.json()
+
+            if(data.message){
+                alert(JSON.stringify(data))
+                return;
+            }
             //Avisar Registro Exitoso
             alert("Producto Registrado")
             router.push("/pdfschema")

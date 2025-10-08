@@ -19,7 +19,7 @@ export default function SendEmail(){
             const result = await fetch("/api/Email",{
                 method:"POST",
                 headers:{"Content-Type":""},
-                body:JSON.stringify({User: emailV})
+                body:JSON.stringify({email: emailV})
             })
             //Esperar Resultado
             const data = await result.json()
