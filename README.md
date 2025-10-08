@@ -1,4 +1,4 @@
-````markdown
+
 <h1 align="center">🛒 Inventory Management System</h1>
 
 <p align="center">
@@ -117,13 +117,10 @@ El módulo usa **Puppeteer** para crear archivos PDF profesionales desde conteni
 Ejemplo: reportes de ventas, listados de productos, o comprobantes de compra.
 
 ```js
-import puppeteer from "puppeteer";
+import { GeneratePDF } from "@/services/pdf.service";
 
-const browser = await puppeteer.launch();
-const page = await browser.newPage();
-await page.setContent("<h1>Reporte de Inventario</h1>");
-await page.pdf({ path: "reporte.pdf", format: "A4" });
-await browser.close();
+//Llamado del Servicio Generador de PDF
+const pdf = await GeneratePDF(html);
 ```
 
 ---
@@ -135,23 +132,82 @@ El sistema usa **Nodemailer** para enviar mensajes personalizados, incluyendo en
 Ejemplo:
 
 ```js
-await transporter.sendMail({
-  from: "Inventario <no-reply@inventario.com>",
-  to: "usuario@gmail.com",
-  subject: "Recupera tu contraseña",
-  html: `<a href="https://miapp.com/newPass?token=XYZ">Restablecer contraseña</a>`
-});
+import { transporterGmail, mailprepare, sendmail } from "@/services/email.service";
+//Llamado al Servicio de Transporte 
+const transporter = await transporterGmail();
+//Llamado al Servicio de Preparar Correo
+const mail = await mailprepare('correo@gmail.com', 'Asunto', 'Cuerpo');
+//Llamado al Servicio de Enviar Correo
+const result = await sendmail(transporter, mail);
 ```
 
 ---
 
+## 🚀 Instalación y Ejecución del Proyecto
+
+Sigue estos pasos para clonar, configurar y ejecutar el sistema en tu entorno local 👇
+
+### 📥 1. Clonar el Repositorio
+
+```bash
+git clone https://github.com/bskcfv/InventarioBsk.git
+cd InventarioBsk
+```
+
+---
+
+### ⚙️ 2. Instalar Dependencias
+
+Asegúrate de tener **Node.js (v18 o superior)** instalado, luego ejecuta:
+
+```bash
+npm install
+```
+
+Esto instalará todas las librerías necesarias, incluyendo:
+
+* `dotenv`
+* `mongodb`
+* `puppeteer`
+* `nodemailer`
+* `jsonwebtoken`
+* `@fortawesome/*`
+
+---
+
+### 🧩 3. Configurar Variables de Entorno
+
+Crea un archivo `.env.local` en la raíz del proyecto con tus credenciales (ver la sección: ⚙️ Configuración del Entorno).
+
+---
+
+### 🧠 4. Ejecutar el Proyecto en Modo Desarrollo
+
+```bash
+npm run dev
+```
+
+Por defecto, la aplicación se ejecutará en:
+
+👉 [http://localhost:3000](http://localhost:3000)
+
+---
+
+### 🧪 5. Probar Funcionalidades Clave
+
+| Módulo           | Descripción                                | Endpoint           |
+| ---------------- | ------------------------------------------ | ------------------ |
+| 🧍 **Auth**      | Login, recuperación y cambio de contraseña | `/api/Auth/...`    |
+| 📦 **Productos** | CRUD de productos                          | `/api/Product/...` |
+| 💰 **Ventas**    | Registro y actualización de stock          | `/api/sale/...`    |
+| 🧾 **PDF**       | Generación de reportes PDF                 | `/api/PDF/...`     |
+| 📧 **Email**     | Envío de correos automáticos               | `/api/email/...`   |
+
+---
 
 ## 👨‍💻 Autor
 
 **Cristian Valderrama**
-💻 Desarrollador Full Stack
 📧 [cristianvalderrama1014@gmail.com](mailto:cristianvalderrama1014@gmail.com)
-🌐 [GitHub Profile](https://github.com/tu-usuario)
-
-
+🌐 [GitHub: bskcfv](https://github.com/bskcfv)
 
